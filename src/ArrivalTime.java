@@ -5,26 +5,26 @@ public class ArrivalTime {
         this.arrivalTime= 1; //default
     }
 
-    public ArrivalTime(int burstTime){
-        this.arrivalTime= burstTime;
+    public ArrivalTime(int arrival){
+        this.arrivalTime= arrival;
     }
 
     //set
-    public void setArrivalTime(int burstTime){
-        this.arrivalTime= burstTime;
+    public void setArrivalTime(int arrival){
+        this.arrivalTime= arrival;
     }
     //return
     public int getArrivalTime() {
         return this.arrivalTime;
     }
 
-    public boolean isZero(){
+    public boolean isZeroArrivalTime(){
         if(this.arrivalTime != 0)
             return true;
         else
             return false;
     }
-    public int increment(){
+    public int incrementArrivalTime(){
         int newTime;
         newTime= this.arrivalTime+1;
         this.arrivalTime = newTime;
@@ -33,9 +33,9 @@ public class ArrivalTime {
 
     }
 
-    public int decrement(){
+    public int decrementArrivalTime(){
         int newTime;
-        if (isZero()){
+        if (isZeroArrivalTime()){
             newTime= this.arrivalTime-1;
         }
         else {
@@ -44,5 +44,9 @@ public class ArrivalTime {
         this.arrivalTime = newTime;
         return this.arrivalTime;
 
+    }
+
+    public int nextArrival(){
+        return arrivalTime++;
     }
 }

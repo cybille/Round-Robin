@@ -1,25 +1,26 @@
-public class Main extends Thread {
-    public static int amount = 0;
+import java.io.*;
+import java.util.Scanner;
 
+public class Main {
     public static void main(String[] args) {
-        Main thread = new Main();
-        thread.start();
-        System.out.println("This code is outside of the thread");
+        Scanner scanner= new Scanner(System.in);
 
-        // Wait for the thread to finish
-        while(thread.isAlive()) {
-            System.out.println("Waiting...");
-        }
-        // Update amount and print its value
-        System.out.println("Main: " + amount);
-        amount++;
-        System.out.println("Main: " + amount);
+        String intro= "Name your process, give burst time, give time quantum and watch this \n";
+        String options= "1 create process \n"+
+                "2 get arrival time \n" +
+                "3 get execution time \n" +
+                "4 get completion time \n" +
+                "clock";
+
+        System.out.print(intro);
+
+        String process= scanner.next();
+        System.out.print(intro);
+        int burst= scanner.nextInt();
+        System.out.print(intro);
+        int quantum= scanner.nextInt();
+
+
     }
 
-    public void run() {
-        System.out.println("This code is running in a thread");
-        amount++;
-
-
-    }
 }

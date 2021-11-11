@@ -1,24 +1,19 @@
-public class BurstTime {
+public class TimeChange {
     int burstTime;
+    int arrivalTime;
 
-    public BurstTime(){
-        this.burstTime= 1; //default
-    }
+    public TimeChange(){}
 
-    public BurstTime(int burstTime){
-        this.burstTime= burstTime;
+    //set
+    public void setArrivalTime(int arrivalTime){
+        this.arrivalTime= arrivalTime;
     }
 
     //set
-    public void setBurstTime(int burstTime){
-        this.burstTime= burstTime;
-    }
-    //return
-    public int getBurstTime() {
-        return this.burstTime;
-    }
+    public void setBurstTime(int burstTime){this.burstTime= burstTime;}
 
-    public boolean isZero(){
+
+    public boolean isNotZeroBurstTime(){
         if(this.burstTime != 0)
             return true;
         else
@@ -35,7 +30,7 @@ public class BurstTime {
 
     public int decrementBurstTime(){
         int newTime;
-        if (!isZero()){
+        if (isNotZeroBurstTime()){
             newTime= this.burstTime-1;
         }
         else {
@@ -45,7 +40,22 @@ public class BurstTime {
         return this.burstTime;
 
     }
+
+
+
     public int nextBurst(){
         return this.burstTime--;
     }
+
+    //return
+    public int getArrivalTime() {
+        return this.arrivalTime;
+    }
+
+    //return
+    public int getBurstTime() {
+        return this.burstTime;
+    }
+
+
 }

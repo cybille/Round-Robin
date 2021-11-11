@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class MainTester {
     public static void main(String[] args) {
-        //Testing clock
+        //Testing clock (eventLog class)
         EventLog event= new EventLog(); //creates events from processes
         HashMap<Integer, String> clockTest= new HashMap<>(); //events inserted here
         event.enumEventToString(Event.CREATE_PROCESS);
@@ -20,6 +20,42 @@ public class MainTester {
         event.createEventLog("tester");
         clockTest.put(1,event.eventLogToString());
         System.out.println(clockTest.values());
+
+
+ //test process class: process objects where information will be stored
+         Process testProcess= new Process("test 1", 2);
+         testProcess.setArrivalTime(0);
+
+         Process testProcess2=  new Process("test 2", 4);
+
+         System.out.println("process "+ testProcess.getProcess() + "\n" +
+         " burst time "+ testProcess.getBurstTime()+ " other \n ");
+
+         //test timechange class with processes
+        //burstTime
+        BurstTime burst= new BurstTime();
+        burst.setBurstTime(5);
+        System.out.println("process "+ testProcess.getProcess() + "\n" +
+                " burst time "+ testProcess.getBurstTime()+ " time class \n "+
+                testProcess.getBurstTime()+" decrement \n");
+        //arrival time
+        System.out.println("process "+ testProcess.getProcess() + "\n" +
+                " arrival time "+ testProcess.getArrivalTime() + " time class \n "+
+                testProcess.getArrivalTime()+" decrement \n");
+
+
+        //arrival time class
+        ArrivalTime arrive= new ArrivalTime();
+        arrive.setArrivalTime(0);
+        Process processTest3= new Process("3", 4);
+        processTest3.setArrivalTime(arrive.getArrivalTime());
+        Process processTest4= new Process("4", 5);
+        arrive.nextArrival();
+        processTest4.setArrivalTime(arrive.getArrivalTime());
+        //next arrival
+        System.out.println("process "+ processTest3.getProcess() + "\n" +
+                " arrival time "+ processTest3.getArrivalTime() + " time class \n "+
+                processTest4.getArrivalTime() + " "+ arrive.nextArrival());
 
 
 

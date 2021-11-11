@@ -23,13 +23,7 @@ public class Scheduler { // basic scheduler, can be extended to more complicated
 
     public Scheduler(){}
 
-    public int nextBurst(){
-        return this.burstTime--;
-    }
 
-    public int nextArrival(){
-        return this.arrivalTime++;
-    }
 
     public int nextWaitingTime(int nextProcess){
         //get pointer of next process
