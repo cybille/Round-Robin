@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class MainTester {
     public static void main(String[] args) {
@@ -19,7 +21,10 @@ public class MainTester {
         event.createEventDetails("switch", 0);
         event.createEventLog("tester");
         clockTest.put(1,event.eventLogToString());
-        System.out.println(clockTest.values());
+        Set<Map.Entry<Integer,String>> values = clockTest.entrySet();
+        for(Map.Entry<Integer,String> i: values){
+            System.out.println(i);
+        }
 
 
  //test process class: process objects where information will be stored

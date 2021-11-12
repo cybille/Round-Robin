@@ -19,6 +19,9 @@ public class Main {
         int burst= scanner.nextInt();
         System.out.print(intro);
         int quantum= scanner.nextInt();
+        //call on create process and put in input
+
+        //scheduler will organize processes
 
 
     }
