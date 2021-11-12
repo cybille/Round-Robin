@@ -1,10 +1,8 @@
-public class ProcessCreator {
+public class ProcessCreator extends Scheduler {
     //burst
     BurstTime burst= new BurstTime();
     //arrival
     ArrivalTime arrive= new ArrivalTime(-1);
-    //scheduler
-    Scheduler scheduler= new Scheduler();
 
     // time quantum
     int timeQuantum= 1;
@@ -15,6 +13,7 @@ public class ProcessCreator {
         arrive.nextArrival();
         Process process= new Process("name", burst.getBurstTime());
         //call on scheduler to put it in queue
+        addQueueNewProcess(process);
     }
 
 
