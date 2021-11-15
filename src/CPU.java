@@ -62,7 +62,6 @@ public class CPU {
 
     }
     public void setWaitingTime(int turnAroundTime, int burstTime){
-
         this.waitingTime= turnAroundTime- burstTime;
     }
     public void setResponseTime(int idleTime, int cpuArrivalTime){
