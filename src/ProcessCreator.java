@@ -14,10 +14,8 @@ public class ProcessCreator extends Scheduler {
         Process process= new Process("name", burst.getBurstTime());
         //call on scheduler to put it in queue
         addQueueNewProcess(process);
+        setTimeQuantum(timeQuantum);
     }
-
-
-
 
 
 }

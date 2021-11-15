@@ -5,6 +5,8 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
     protected Queue<Process> readyQueue= new LinkedList<Process>();
     protected Queue<Process> waitQueue= new LinkedList<Process>();
 
+
+
     //event
     EventLog event= new EventLog(); //creates events from processes
      //clock: timestamps all events for processes, such as creation time, completion time, etc.
@@ -24,7 +26,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
     private int responseTime;
     //increment
 
-    public Scheduler(){}
+    public Scheduler(){super();}
 
     public void addQueueNewProcess(Process p){
         this.process = p;
@@ -109,5 +111,13 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
     public int nextWaitingTime(){
         waitingTime= this.arrivalTime - process.getArrivalTime();
         return waitingTime;
+    }
+
+   public void sendToCPU(Process p, int timeQuantum){
+        setTimeQuantum(timeQuantum);
+        getProcess(p);
+   }
+    public void sendToCPU(Process p){
+        getProcess(p);
     }
 }
