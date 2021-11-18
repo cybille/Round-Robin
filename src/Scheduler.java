@@ -70,28 +70,27 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
         event.enumEventToString(Event.CONTEXT_SWITCH);
         event.createEventDetails("context switch out "+ out.getProcess(), out.getBurstTime());
         setClock(event.eventLogToString());
-        //check for remaining burst time
-//        this.process.setCompletionTime(current);
+        //send straight to cpu
+        waitQueue.remove(in);
 
         //put in new process
         event.createEventDetails("context switch in "+ in.getProcess(), in.getBurstTime());
         event.createEventLog(in.getProcess());
         setClock(event.eventLogToString());
-        //send straight to cpu
-        waitQueue.remove(in);
+
     }
     public void interrupt(Process out){
         addQueueOldProcess(out);
         event.enumEventToString(Event.INTERRUPTED);
-        event.createEventDetails("time quantum", process.getBurstTime());
+        event.createEventDetails("execution time", out.getExecutionTime());
         event.createEventLog(process.getProcess());
         setClock(event.eventLogToString());
     }
 
     public void terminate(Process out){
         event.enumEventToString(Event.TERMINATE_PROCESS);
-        event.createEventDetails("time quantum", process.getBurstTime());
-        event.createEventLog(process.getProcess());
+        event.createEventDetails("time quantum", out.getBurstTime());
+        event.createEventLog(out.getProcess());
         setClock(event.eventLogToString());
     }
     public void setClock(String event){
