@@ -97,8 +97,7 @@ public class EventLog {
     //get current time and date
     public void createTimestamp(){
         LocalDateTime current = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
-        this.timeStamp = current.format(formatter);
+        this.timeStamp = current.getNano() +" ";
     }
 
     public String eventDetail(String timeType, int time){

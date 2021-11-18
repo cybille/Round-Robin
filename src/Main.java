@@ -3,25 +3,28 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner= new Scanner(System.in);
+        ProcessCreator processes= new ProcessCreator("p1", 4,2);
+        Scheduler scheduler= new Scheduler();
+        processes.newProcess("p2", 12);
+        processes.newProcess("p3", 10);
+        System.out.println(processes.nextWaitingTime());
+        processes.newProcess("p4", 4);
+        processes.newProcess("p5", 12);
+        ProcessCreator processes2= new ProcessCreator("p6", 12,4);
+        processes2.newProcess("p7", 12);
 
-        String intro= "Name your process, give burst time, give time quantum and watch this \n";
-        String options= "1 create process \n"+
-                "2 get arrival time \n" +
-                "3 get execution time \n" +
-                "4 get completion time \n" +
-                "clock";
+        System.out.println(processes.getFromQueue()+ " "+ processes.getFromQueue());
+        System.out.println(processes.nextWaitingTime());
+//        System.out.println();
+        processes2.getProcess(processes2.getFromQueue());
+        processes.printClock();
+        processes2.printClock();
+        processes2.executeProcess();
+        processes2.contextSwitch(processes2.returnProcess(),processes2.getFromQueue(), processes2.getTurnAroundTime() );
+        processes2.addQueueOldProcess(processes2.returnProcess());
+        processes2.printClock();
 
-        System.out.print(intro);
 
-        String process= scanner.next();
-        System.out.print(intro);
-        int burst= scanner.nextInt();
-        System.out.print(intro);
-        int quantum= scanner.nextInt();
-        //call on create process and put in input
-
-        //scheduler will organize processes
 
 
     }

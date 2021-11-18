@@ -1,4 +1,5 @@
 public class CPU {
+    protected Process executing;
     protected int timeQuantum;
     protected int idleTime;
     protected int executionTime;
@@ -9,6 +10,7 @@ public class CPU {
     private int arrivalTime;
     private int cpuArrivalTime;
     private int burstTime;
+
 
     ArrivalTime totalTime= new ArrivalTime();
     /*Turnaround time: Completion time - Arrival time
@@ -25,6 +27,7 @@ public class CPU {
     }
     //receive new process record arrival
     public void getProcess(Process process){
+        this.executing= process;
         this.arrivalTime=process.getArrivalTime();
         this.burstTime= process.getBurstTime();
         this.cpuArrivalTime= totalTime.getArrivalTime();
@@ -94,6 +97,10 @@ public class CPU {
         return idleTime;
     }
 
+    public Process returnProcess(){
+        return executing;
+    }
+
     //execute process
     //loop, decrement burstime - timequantum
     //increment arrival or time in the cpu (total time)
@@ -112,6 +119,7 @@ public class CPU {
             }
             //potential cpu arrive time reset
         }
+        executing.setBurstTime(burstTime);
     }
     //boolean checker
     public boolean burstTime(){

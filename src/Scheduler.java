@@ -43,37 +43,39 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
     }
 
 
-
     public void addQueueOldProcess(Process p){
         this.process = p;
         readyQueue.add(process);
         //event
         event.enumEventToString(Event.SENT_TO_READY_QUEUE);
-//        event.createEventDetails("burst", process.getBurstTime());
+        event.createEventDetails("Remaining burst", process.getBurstTime());
 //        event.createEventDetails("Arrival Time", process.getArrivalTime());
         event.createEventLog(process.getProcess());
         setClock(event.eventLogToString());
     }
 
     public Process getFromQueue(){
+        Process exit= readyQueue.remove();
         event.enumEventToString(Event.SENT_TO_CPU);
-        event.createEventDetails("time quantum", process.getBurstTime());
-        event.createEventLog(process.getProcess());
+        event.createEventDetails("time quantum", timeQuantum);
+        event.createEventDetails("current burst",exit.getBurstTime());
+        event.createEventLog(exit.getProcess());
         setClock(event.eventLogToString());
-        return readyQueue.remove();
+        return exit;
     }
 
     public void contextSwitch(Process out, Process in, int current){
         //terminate old process
+        event.createEventLog(out.getProcess());
         event.enumEventToString(Event.CONTEXT_SWITCH);
-        event.createEventDetails("context switch out "+ out.getProcess(), process.getBurstTime());
+        event.createEventDetails("context switch out "+ out.getProcess(), out.getBurstTime());
         setClock(event.eventLogToString());
         //check for remaining burst time
-        this.process.setCompletionTime(current);
+//        this.process.setCompletionTime(current);
 
         //put in new process
-        event.createEventDetails("context switch in"+ in.getProcess(), process.getBurstTime());
-        event.createEventLog(process.getProcess());
+        event.createEventDetails("context switch in "+ in.getProcess(), in.getBurstTime());
+        event.createEventLog(in.getProcess());
         setClock(event.eventLogToString());
         //send straight to cpu
         waitQueue.remove(in);
@@ -110,7 +112,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
     }
     public int nextWaitingTime(){
         waitingTime= this.arrivalTime - process.getArrivalTime();
-        return waitingTime;
+        return Math.abs(waitingTime);
     }
 
    public void sendToCPU(Process p, int timeQuantum){
