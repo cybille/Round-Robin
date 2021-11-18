@@ -9,7 +9,7 @@ public class Main {
         System.out.println("waiting time in ready queue " +processes.nextWaitingTime());
         processes.newProcess("p4", 4);
         processes.newProcess("p5", 12);
-        System.out.println("waiting time in ready queue " + processes.nextWaitingTime());
+        System.out.println("\n waiting time in ready queue " + processes.nextWaitingTime());
 
 
         ProcessCreator processes2= new ProcessCreator("p6", 12,4);
@@ -20,7 +20,7 @@ public class Main {
         processes2.printClock();
 
         //context switching
-        System.out.println("Testing context switch with processes 2 ");
+        System.out.println("\n Testing context switch with processes 2 ");
         //put in CPU
         processes2.getProcess(processes2.getFromQueue());
         //execute
@@ -34,7 +34,7 @@ public class Main {
         processes2.printClock();
 
         //test interrupt
-        System.out.println("Testing interrupt with processes");
+        System.out.println("\n Testing interrupt with processes");
         processes.printClock();
         processes.getProcess(processes.getFromQueue());
         processes.executeProcess();
