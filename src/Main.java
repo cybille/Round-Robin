@@ -28,7 +28,7 @@ public class Main {
         processes2.printClock();
         System.out.println(" ");
         //get process from CPU and process from queue
-        processes2.contextSwitch(processes2.returnProcess(),processes2.getFromQueue(), processes2.getTurnAroundTime());
+//        processes2.contextSwitch(processes2.returnProcess(),processes2.getFromQueue(), processes2.getTurnAroundTime());
         processes2.addQueueOldProcess(processes2.returnProcess());
 
         processes2.printClock();
