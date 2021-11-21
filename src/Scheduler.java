@@ -71,11 +71,11 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
         event.createEventDetails("context switch out "+ out.getProcess(), out.getBurstTime());
         setClock(event.eventLogToString());
         //send straight to cpu
-        waitQueue.remove(in);
-
         //put in new process
+        getFromQueue();
         event.createEventDetails("context switch in "+ in.getProcess(), in.getBurstTime());
         event.createEventLog(in.getProcess());
+
         setClock(event.eventLogToString());
 
     }

@@ -133,7 +133,7 @@ public class CPU {
     public void executeAll(){
         executeProcess();
         setWaitingTime(getTurnAroundTime(), burstTime);
-        setResponseTime(getIdleTime(),cpuArrivalTime);
+        setResponseTime(getIdleTime());
     }
 
 

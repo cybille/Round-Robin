@@ -22,9 +22,9 @@ public class Main {
         //context switching
         System.out.println("\n Testing context switch with processes 2 ");
         //put in CPU
-        processes2.getProcess(processes2.getFromQueue());
+        processes2.getProcess(processes2.getFromQueue()); //send process to cpu
         //execute
-        processes2.executeProcess();
+        processes2.executeProcess(); //executed
         processes2.printClock();
         System.out.println(" ");
         //get process from CPU and process from queue
@@ -41,10 +41,7 @@ public class Main {
         processes.interrupt(processes.returnProcess());
 
         processes.printClock();
-
-
-
-
+        
 
     }
 
