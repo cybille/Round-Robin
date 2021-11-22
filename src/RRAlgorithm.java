@@ -47,6 +47,7 @@ public class RRAlgorithm extends Scheduler {
 //                    pc.addQueueOldProcess(p0);
 //
                 }
+
             } while (!readyQueue.isEmpty());
         } catch(Exception e){
             System.out.println("end of processes");
