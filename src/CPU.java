@@ -1,13 +1,14 @@
 public class CPU {
     protected Process executing;
     protected int timeQuantum;
-    protected int idleTime;
+    protected int idleTime=0;
     protected int executionTime;
     private int completionTime;
     private int turnAroundTime; //cpu arrival- completion
     private int waitingTime;
     private int responseTime;
     private int arrivalTime;
+    private int throughput;
     private int cpuArrivalTime;
     private int burstTime;
 
@@ -46,6 +47,9 @@ public class CPU {
     }
     public void setIdleTime(int arrivalTime, int waitingTime){
         this.idleTime= arrivalTime + waitingTime;
+    }
+    public void nextIdleTime(){
+        this.idleTime++;
     }
 
     //set completion time record current time
@@ -136,9 +140,23 @@ public class CPU {
         setResponseTime(getIdleTime());
     }
 
+    public void getProcessInfo(){
+        System.out.println("execution time " +getExecutionTime());
+        System.out.println("Completion time " +getCompletionTime());
+        System.out.println("turn around time " +getTurnAroundTime());
 
+    }
+    public void getInfo() {
+        // CPU Utilization
+        //Throughput= number of processes / total execution
+        //Average Waiting Time= total wait time/ list of processes size
+        //Average Turnaround Time= total response time/ list of processes size
 
-
-
+        System.out.println("CPU Utilization " +getTotalTime());
+        System.out.println("Throughput " +getIdleTime());
+        System.out.println("Average waiting time " +getIdleTime());
+        System.out.println("Average turnAround time " +getTurnAroundTime());
+        System.out.println("idle time " +getIdleTime());
+    }
 }
 

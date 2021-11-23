@@ -38,11 +38,9 @@ public class RRAlgorithm extends Scheduler {
 //                p = pc.getFromQueue();
 
                 if (pc.burstTime()) {
-                    System.out.print("switch one");
                     pc.contextSwitch(p,getTurnAroundTime());
                     pc.terminate(p);
                 } else {
-                    System.out.print("switch two");
                     pc.contextSwitch(p, pc.getTurnAroundTime());
 //                    pc.addQueueOldProcess(p0);
 //

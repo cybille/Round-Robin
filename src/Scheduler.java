@@ -52,6 +52,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
 //        event.createEventDetails("Arrival Time", process.getArrivalTime());
         event.createEventLog(process.getProcess());
         setClock(event.eventLogToString());
+        nextIdleTime();
     }
 
     public Process getFromQueue(){
@@ -72,6 +73,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
         setClock(event.eventLogToString());
         if (!burstTime())
             addQueueOldProcess(out);
+            nextIdleTime();
         //send straight to cpu
         //put in new process
         Process in= getFromQueue();
@@ -84,6 +86,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
         execute(in);
       if (!burstTime())
         addQueueOldProcess(in);
+        nextIdleTime();
 
 
 
@@ -98,7 +101,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
 
     public void terminate(Process out){
         event.enumEventToString(Event.TERMINATE_PROCESS);
-        event.createEventDetails("time quantum", out.getBurstTime());
+        event.createEventDetails("Done", out.getBurstTime());
         event.createEventLog(out.getProcess());
         setClock(event.eventLogToString());
     }
