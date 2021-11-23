@@ -64,19 +64,28 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
         return exit;
     }
 
-    public void contextSwitch(Process out, Process in, int current){
+    public void contextSwitch(Process out, int current){
         //terminate old process
         event.createEventLog(out.getProcess());
         event.enumEventToString(Event.CONTEXT_SWITCH);
         event.createEventDetails("context switch out "+ out.getProcess(), out.getBurstTime());
         setClock(event.eventLogToString());
+        if (!burstTime())
+            addQueueOldProcess(out);
         //send straight to cpu
         //put in new process
-        getFromQueue();
+        Process in= getFromQueue();
+        event.enumEventToString(Event.CONTEXT_SWITCH);
         event.createEventDetails("context switch in "+ in.getProcess(), in.getBurstTime());
         event.createEventLog(in.getProcess());
-
         setClock(event.eventLogToString());
+        getProcess(in);
+        executeAll();
+        execute(in);
+      if (!burstTime())
+        addQueueOldProcess(in);
+
+
 
     }
     public void interrupt(Process out){
@@ -109,6 +118,13 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
             System.out.println(i);
         }
     }
+
+     public void execute(Process p){
+         event.enumEventToString(Event.EXECUTE_PROCESS);
+         event.createEventDetails("CPU Arrival Time", getCpuArrivalTime());
+         event.createEventLog(p.getProcess());
+         setClock(event.eventLogToString());
+     }
     public int nextWaitingTime(){
         waitingTime= this.arrivalTime - process.getArrivalTime();
         return Math.abs(waitingTime);

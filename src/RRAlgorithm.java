@@ -33,19 +33,21 @@ public class RRAlgorithm extends Scheduler {
                 Process p = pc.getFromQueue();
                 pc.getProcess(p);
                 pc.executeAll();
-                pc.event.enumEventToString(Event.EXECUTE_PROCESS);
-                pc.event.createEventDetails("CPU Arrival Time", getCpuArrivalTime());
-                pc.event.createEventLog(p.getProcess());
-                pc.setClock(pc.event.eventLogToString());
+                pc.execute(p);
+//                Process p0= pc.returnProcess();
+//                p = pc.getFromQueue();
 
                 if (pc.burstTime()) {
-                    pc.contextSwitch(pc.returnProcess(), pc.getFromQueue(), getTurnAroundTime());
+                    System.out.print("switch one");
+                    pc.contextSwitch(p,getTurnAroundTime());
                     pc.terminate(p);
                 } else {
-                    Process outP = pc.returnProcess();
-                    pc.contextSwitch(outP, pc.getFromQueue(), pc.getTurnAroundTime());
-                    pc.addQueueOldProcess(outP);
+                    System.out.print("switch two");
+                    pc.contextSwitch(p, pc.getTurnAroundTime());
+//                    pc.addQueueOldProcess(p0);
+//
                 }
+
             } while (!readyQueue.isEmpty());
         } catch(Exception e){
             System.out.println("end of processes");
