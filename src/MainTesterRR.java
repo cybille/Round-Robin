@@ -1,18 +1,19 @@
+import java.util.Scanner;
 public class MainTesterRR {
     public static void main(String[] args) {
         RRAlgorithm rr= new RRAlgorithm();
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("set time quantum ");
+        int time = scanner.nextInt();
 
-        ProcessCreator processes = new ProcessCreator("p1", 4, 2);
+        ProcessCreator processes = new ProcessCreator("p1", 4, time);
         processes.newProcess("p2", 12);
         processes.newProcess("p3", 10);
-//        System.out.println("waiting time in ready queue " + processes.nextWaitingTime());
         processes.newProcess("p4", 4);
         processes.newProcess("p5", 12);
-//        System.out.println("\n waiting time in ready queue " + processes.nextWaitingTime());
 
-
-        ProcessCreator processes2 = new ProcessCreator("p6", 12, 4);
-        processes2.newProcess("p7", 12);
+        ProcessCreator processes2 = new ProcessCreator("p6", 2, 4);
+        processes2.newProcess("p7", 10);
 
         processes.printClock();
         System.out.println("\n New processes, new time quantum  \n");
@@ -28,6 +29,11 @@ public class MainTesterRR {
 
         rr.rR(processes2);
         processes2.printClock();
+
+        processes.getInfo();
+        processes2.getInfo();
+
+
 
 
 
