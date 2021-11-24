@@ -59,7 +59,7 @@ public class CPU {
     //execute
    //check logic, math check out
     //do we want to reset cpu arrive time
-    public void setTurnAroundTime(int completionTime, int cpuArrivalTime){
+    public void setTurnAroundTime(int completionTime){
         this.turnAroundTime= completionTime- 1;
 
     }
@@ -128,7 +128,7 @@ public class CPU {
             setExecutionTime();
             if (burstTime ==0){
                 setCompletionTime(totalTime.getArrivalTime(), cpuArrivalTime);
-                setTurnAroundTime(getCompletionTime(), cpuArrivalTime);
+                setTurnAroundTime(getCompletionTime());
                 break;
             }
             //potential cpu arrive time reset
