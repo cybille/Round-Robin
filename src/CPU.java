@@ -8,12 +8,13 @@ public class CPU {
     private int waitingTime;
     private int responseTime;
     private int arrivalTime;
-    private int throughput;
+    private float throughput;
     private int cpuArrivalTime;
     private int burstTime;
 
-
+    // 1- [(contextswitchTime- # of context switches)= idle time/ (total execution) ]= CPU utilization
     ArrivalTime totalTime= new ArrivalTime();
+    ArrivalTime contextSwitch= new ArrivalTime();
     /*Turnaround time: Completion time - Arrival time
     Waiting time: Turnaround time – Burst time
     Response time: the time at which a process gets cpu first time – arrival time
@@ -32,17 +33,14 @@ public class CPU {
         this.arrivalTime=process.getArrivalTime();
         this.burstTime= process.getBurstTime();
         this.cpuArrivalTime= totalTime.getArrivalTime();
-//        totalTime.incrementArrivalTime();
-        System.out.println("CPU Arrival Time: "+ cpuArrivalTime);
+        contextSwitch.incrementArrivalTime();
         //call execute function
     }
 
 //check logic, math checks out
     //do we want to reset cpu arrival time everything
-    public void setExecutionTime(int burstTime, int cpuArrivalTime){
-        this.executionTime= (burstTime - 1);
-        System.out.println("Execute Time Total "+ getExecutionTime());
-
+    public void setExecutionTime(){
+        this.executionTime= this.executionTime+1;
 
     }
     public void setIdleTime(int arrivalTime, int waitingTime){
@@ -55,9 +53,7 @@ public class CPU {
     //set completion time record current time
      //good to go
     public void setCompletionTime(int completionTime, int cpuArrivalTime) {
-        System.out.println("Total " +completionTime+ " CPU "+ cpuArrivalTime);
         this.completionTime= completionTime- cpuArrivalTime;
-        System.out.println("Completion Time Total "+ getCompletionTime());
     }
 
     //execute
@@ -65,15 +61,17 @@ public class CPU {
     //do we want to reset cpu arrive time
     public void setTurnAroundTime(int completionTime, int cpuArrivalTime){
         this.turnAroundTime= completionTime- 1;
-        System.out.println("Turn Time Total "+ getTurnAroundTime());
 
     }
-    public void setWaitingTime(int turnAroundTime, int burstTime){
-        this.waitingTime= turnAroundTime- burstTime;
+    public void setWaitingTime(int process){
+       //arrival time, wait time in queue
+        //cpu arrival time is wait for cpu
+        this.waitingTime= (arrivalTime + cpuArrivalTime)/process;
     }
     public void setResponseTime(int idleTime, int cpuArrivalTime){
         this.responseTime= idleTime- cpuArrivalTime;
     }
+
 
     //
 
@@ -101,6 +99,18 @@ public class CPU {
         return idleTime;
     }
 
+    public float getThroughput(){
+        return throughput;
+    }
+    public int getWaitingTime(){
+        return waitingTime;
+    }
+
+    public double getCPUUtilization(){
+        int cpuU= 1-((getTurnAroundTime()- contextSwitch.getArrivalTime())/getTotalTime());
+
+        return cpuU;
+    }
     public Process returnProcess(){
         return executing;
     }
@@ -112,10 +122,10 @@ public class CPU {
     // use set completion time to get current time: time done- time arrived
     //set turnaround
     public void executeProcess(){
-        setExecutionTime(burstTime,cpuArrivalTime);
         for (int i= this.timeQuantum; i>0; i--){
             totalTime.incrementArrivalTime();
             this.burstTime--;
+            setExecutionTime();
             if (burstTime ==0){
                 setCompletionTime(totalTime.getArrivalTime(), cpuArrivalTime);
                 setTurnAroundTime(getCompletionTime(), cpuArrivalTime);
@@ -136,7 +146,6 @@ public class CPU {
 
     public void executeAll(){
         executeProcess();
-        setWaitingTime(getTurnAroundTime(), burstTime);
         setResponseTime(getIdleTime());
     }
 
@@ -148,15 +157,14 @@ public class CPU {
     }
     public void getInfo() {
         // CPU Utilization
-        //Throughput= number of processes / total execution
         //Average Waiting Time= total wait time/ list of processes size
         //Average Turnaround Time= total response time/ list of processes size
 
-        System.out.println("CPU Utilization " +getTotalTime());
-        System.out.println("Throughput " +getIdleTime());
-        System.out.println("Average waiting time " +getIdleTime());
+        System.out.println("CPU Utilization " +getCPUUtilization());
+        System.out.println("Throughput " +getThroughput());
+        System.out.println("Average waiting time " +getWaitingTime());
         System.out.println("Average turnAround time " +getTurnAroundTime());
-        System.out.println("idle time " +getIdleTime());
+        System.out.println("CPU idle time " +getIdleTime());
     }
 }
 

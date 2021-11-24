@@ -31,6 +31,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
     public void addQueueNewProcess(Process p){
         this.process = p;
         readyQueue.add(process);
+        nextWaitingTime();
         processList.add(process);
         //event
         event.enumEventToString(Event.CREATE_PROCESS);
@@ -40,12 +41,15 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
         event.createEventDetails("Arrival Time", process.getArrivalTime());
         event.createEventLog(process.getProcess());
         setClock(event.eventLogToString());
+
+
     }
 
 
     public void addQueueOldProcess(Process p){
         this.process = p;
         readyQueue.add(process);
+        nextWaitingTime();
         //event
         event.enumEventToString(Event.SENT_TO_READY_QUEUE);
         event.createEventDetails("Remaining burst", process.getBurstTime());
@@ -120,6 +124,7 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
         for(Map.Entry<Integer,String> i: values){
             System.out.println(i);
         }
+
     }
 
      public void execute(Process p){
@@ -127,10 +132,14 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
          event.createEventDetails("CPU Arrival Time", getCpuArrivalTime());
          event.createEventLog(p.getProcess());
          setClock(event.eventLogToString());
+
      }
     public int nextWaitingTime(){
-        waitingTime= this.arrivalTime - process.getArrivalTime();
+        this.waitingTime++;
         return Math.abs(waitingTime);
+    }
+    public int getWaitTime(){
+        return this.waitingTime;
     }
 
    public void sendToCPU(Process p, int timeQuantum){
@@ -139,5 +148,10 @@ public class Scheduler extends CPU{ // basic scheduler, aka queue management
    }
     public void sendToCPU(Process p){
         getProcess(p);
+    }
+
+    public void setInfo(){
+        setThroughput(processList.size());
+        setWaitingTime(processList.size());
     }
 }
