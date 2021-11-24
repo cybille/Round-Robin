@@ -29,7 +29,6 @@ public class RRAlgorithm extends Scheduler {
         this.readyQueue= pc.readyQueue;
         try {
             do {
-                System.out.println(readyQueue.size());
                 Process p = pc.getFromQueue();
                 pc.getProcess(p);
                 pc.executeAll();
